@@ -168,9 +168,9 @@ const logBucket = new s3.Bucket(stack, 'LogBucket', {
 
 - `npm run build`: Compile TypeScript to JavaScript.
 - `npm run watch`: Watch for changes and compile automatically.
-- `npx cdk deploy`: Deploy this stack to your default AWS account/region.
-- `npx cdk diff`: Compare the deployed stack with the current state.
-- `npx cdk synth`: Emit the synthesized CloudFormation template.
+- `npx cdk deploy` OR `cdk deploy`: Deploy this stack to your default AWS account/region.
+- `npx cdk diff` OR `cdk diff`: Compare the deployed stack with the current state.
+- `npx cdk synth` OR `cdk synth`: Emit the synthesized CloudFormation template.
 - `npm run test` or `tsc && npm test`: Run your tests and expect the following output:
 
   Example Output:
