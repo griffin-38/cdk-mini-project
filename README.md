@@ -223,7 +223,7 @@ This section explains the significant design decisions made during the implement
 These design choices were made to balance security, scalability, and ease of management while adhering to AWS best practices. They contribute to the overall robustness and reliability of the project.
 
 
-### Innovative Approaches and Problem-Solving
+## Innovative Approaches and Problem-Solving
 This project incorporates several innovative approaches to address challenges and optimize the infrastructure setup:
 
 1. **Dynamic S3 Bucket Naming Convention:**
