@@ -165,7 +165,7 @@ const logBucket = new s3.Bucket(stack, 'LogBucket', {
 });
 
 ```
-## 7. Useful Commands
+## 5. Useful Commands
 * `npm run build`   compile typescript to js
 * `npm run watch`   watch for changes and compile
 * `npx cdk deploy`  deploy this stack to your default AWS account/region
