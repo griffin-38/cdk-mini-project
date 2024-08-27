@@ -164,11 +164,11 @@ const logBucket = new s3.Bucket(stack, 'LogBucket', {
 });
 ```
 
-## 5. Useful Commands
+## 5. Useful Commands (Build, Deploy, and Test)
 
 - `npm run build`: Compile TypeScript to JavaScript.
 - `npm run watch`: Watch for changes and compile automatically.
-- `npx cdk deploy` OR `cdk deploy`: Deploy this stack to your default AWS account/region.
+- `npx cdk deploy` OR `cdk deploy`: Deploy this stack to your default AWS account/region. After you have deployed, you should see changes reflected in `AWS Console`.
 - `npx cdk diff` OR `cdk diff`: Compare the deployed stack with the current state.
 - `npx cdk synth` OR `cdk synth`: Emit the synthesized CloudFormation template.
 - `npm run test` or `tsc && npm test`: Run your tests and expect the following output:
