@@ -92,8 +92,8 @@ The project comes with the following pre-configured AWS resources:
 
 **Steps:**
 
-- **Dockerfile:** Use `EXPOSE` to define the internal port (e.g., `8080`).
-- **ECS Task Definition:** Map the internal port to the external port using `portMappings` (e.g., `8080 -> 80`).
+- **Dockerfile:** Use `EXPOSE` to define the internal port.
+- **ECS Task Definition:** Map the internal port to the external port using `portMappings`.
 - **ECS Service:** Ensure the service routes traffic correctly, using load balancers and target groups if necessary.
 
 ## 2. Network Security
