@@ -1,5 +1,7 @@
 *.js
+*.pdf
 !jest.config.js
+infra-old.ts
 *.d.ts
 node_modules
 

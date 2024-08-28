@@ -10,9 +10,8 @@ import * as path from 'path';
 const app = new cdk.App();
 
 const stack = new cdk.Stack(app, 'EMD-FargateService15',
- // { env: { account: AWS_ACCOUNT, region: AWS_REGION }}
+   // { env: { account: AWS_ACCOUNT, region: AWS_REGION }}
 );
-
 
 // Create VPC
 const vpc = new ec2.Vpc(stack, 'VPC', {
@@ -25,16 +24,12 @@ const vpc = new ec2.Vpc(stack, 'VPC', {
     },
     {
       name: 'Private',
-      subnetType: ec2.SubnetType.PRIVATE_ISOLATED,  // Private subnet with NAT Gateway for outbound traffic
+      subnetType: ec2.SubnetType.PRIVATE_ISOLATED,  // Private subnet with NAT Gateway for outbound traffic deprecated PRIVATE_WITH_NAT
+      // subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,  // Use PRIVATE_WITH_EGRESS for private subnets with internet access
+
     }
   ]
 });
-
-// Create VPC
-// const vpc = new ec2.Vpc(stack, 'VPC', {
-//   maxAzs: 2,
-//   natGateways: 0,
-// });
 
 // Create Load Balancer
 const alb = new elbv2.ApplicationLoadBalancer(stack, 'EMD-ApplicationLoadBalancer', {
@@ -64,11 +59,6 @@ const fargateContainer = new ecs.ContainerDefinition(stack, `EMD-FargateContaine
           hostPort: 8080, // Option 1: Make it the same as containerPort
           protocol: ecs.Protocol.TCP
       }
-      // Or use:
-      // {
-      //     containerPort: 8080,
-      //     protocol: ecs.Protocol.TCP
-      // }
   ],
   environment: {
       EMD_VAR: 'option 1',
@@ -98,19 +88,6 @@ ec2SecurityGroup.addIngressRule(
   'Allow HTTP traffic from Load Balancer only'
 );
 
-// const service = new ecs.FargateService(stack, `EMD-ecs-service`, {
-//   assignPublicIp: true,
-//   cluster: cluster,
-//   taskDefinition: fargateTaskDefinition,
-//   platformVersion: ecs.FargatePlatformVersion.LATEST,
-//   vpcSubnets: {
-//       subnets: [
-//           vpc.publicSubnets[0],
-//           vpc.publicSubnets[1],
-//       ]
-//   },
-//   securityGroups: [ec2SecurityGroup]
-// });
 
 // Updated Security Group Configuration:
 const service = new ecs.FargateService(stack, `EMD-ecs-service`, {
@@ -119,11 +96,12 @@ const service = new ecs.FargateService(stack, `EMD-ecs-service`, {
   taskDefinition: fargateTaskDefinition,
   platformVersion: ecs.FargatePlatformVersion.LATEST,
   vpcSubnets: {
-    subnetType: ec2.SubnetType.PRIVATE_ISOLATED  // Use private subnets for ECS tasks (PRIVATE_WITH_NAT deprecated)
-  },
+    subnetType: ec2.SubnetType.PRIVATE_ISOLATED,  // Private subnet with NAT Gateway for outbound traffic deprecated PRIVATE_WITH_NAT
+ // subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,  // Use PRIVATE_WITH_EGRESS for private subnets with internet access
+   
+},
   securityGroups: [ec2SecurityGroup]
 });
-
 
 // Add HTTP Listener
 const httpListener = alb.addListener(`EMD-HTTPListner`, {
@@ -140,16 +118,9 @@ httpListener.addTargets('EMD-ECS', {
 
 });
 
-// function generateBucketName(stack: cdk.Stack) : string {
-//   const environmentType = 'Development';
-//   const region = stack.region.toUpperCase();
-//   const timestamp = new Date().toISOString();
-//   return `${environmentType}-${region}-${timestamp}`;
-// }
-
 //  few adjustments to comply with AWS naming conventions. Here's how you can modify the function and integrate it with your S3 bucket setup
 function generateBucketName(stack: cdk.Stack): string {
-  const environmentType = 'development'; // AWS bucket names must be lowercase
+  const environmentType = 'test-development'; // AWS bucket names must be lowercase
   const region = stack.region.toLowerCase(); // AWS bucket names must be lowercase
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, ''); // Use only the date part
   let bucketName = `${environmentType}-${region}-${date}`;
@@ -162,10 +133,12 @@ function generateBucketName(stack: cdk.Stack): string {
   return bucketName;
 }
 
-
 const logBucket = new s3.Bucket(stack, 'LogBucket', {
   bucketName: generateBucketName(stack),
   removalPolicy: cdk.RemovalPolicy.DESTROY, // Adjust this based on your retention policy
   autoDeleteObjects: true, // Be cautious with this setting in production
   versioned: true,
 });
+
+// Enable Access Logging for ALB
+// alb.logAccessLogs(logBucket, 'alb-logs'); // Specify the S3 bucket and optional prefix for logs
