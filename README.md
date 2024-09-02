@@ -285,13 +285,7 @@ These innovative solutions demonstrate a strong focus on security, reliability, 
 
 ## Troubleshooting
 
-# Fourth part of the troubleshooting section
-troubleshooting_section_part_4 = """
----
-
-### Validation Steps and Changes/Updates
-
-Certainly! Here’s how you can validate and check each aspect of your AWS CDK configuration, along with where you might need to make changes or updates:
+### Validation Steps
 
 #### 1. **IAM Permissions:**
    - **Check IAM Roles**:
