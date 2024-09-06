@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.4-alpine
+FROM python:3.9-alpine
 
 # Set the working directory to /app
 WORKDIR /app
@@ -14,7 +14,7 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 8080
 
 # Define environment variable
-ENV FAVORITE_DESSERT="cheesecake"
+ENV FAVORITE_DESSERT="CHEESECAKE"
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
