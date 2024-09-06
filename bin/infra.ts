@@ -162,10 +162,11 @@ const logGroup = new logs.LogGroup(stack, 'LogGroup', {
   removalPolicy: cdk.RemovalPolicy.DESTROY,  // This will delete the log group when the stack is destroyed
 });
 
-// Add Container to Task Definition with Health Check
+// Add Container to Task Definition 
+// TODO: Add Healthcheck + Use local docker image
+// image: ecs.ContainerImage.fromAsset(path.resolve(__dirname, '../local-image')),
 const fargateContainer = fargateTaskDefinition.addContainer('FargateContainer', {
   image: ecs.ContainerImage.fromRegistry("amazon/amazon-ecs-sample"),// Optional: Use an existing image 
-  // image: ecs.ContainerImage.fromAsset(path.resolve(__dirname, '../local-image')),
   logging: ecs.LogDriver.awsLogs({
     streamPrefix: 'ecs-task',
     logGroup: logGroup
@@ -182,6 +183,16 @@ const fargateContainer = fargateTaskDefinition.addContainer('FargateContainer', 
   },
 });
 
+// healthCheck: {
+//   command: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"],
+//   interval: cdk.Duration.minutes(1),
+//   timeout: cdk.Duration.seconds(10),
+//   retries: 3,
+//   startPeriod: cdk.Duration.seconds(240),
+// },
+// });
+
+
 // Create Fargate Service
 const service = new ecs.FargateService(stack, 'FargateEcsService', {
   cluster: cluster,
@@ -192,6 +203,31 @@ const service = new ecs.FargateService(stack, 'FargateEcsService', {
   },
   assignPublicIp: false,  // Disable public IP for private subnets
 });
+
+
+// TODO: Add HTTP Listener w/ Health Check
+
+// // Add HTTP Listener on Port 80
+// const httpListener = alb.addListener('HTTPListener', {
+//   port: 80,
+//   open: true,
+//   protocol: elbv2.ApplicationProtocol.HTTP,
+// });
+
+// // Add listener target (ECS service listening on port 8080)
+// httpListener.addTargets('ECS', {
+//   port: 8080,
+//   protocol: elbv2.ApplicationProtocol.HTTP,
+//   targets: [service.loadBalancerTarget({
+//     containerName: 'FargateContainer',
+//     containerPort: 8080
+//   })],
+//   healthCheck: {
+//     path: "/health",
+//     interval: cdk.Duration.minutes(1),
+//     timeout: cdk.Duration.seconds(10),
+//   }
+// });
 
 // S3 Bucket for logs
 const logBucket = new s3.Bucket(stack, 'LogBucket', {
