@@ -1,11 +1,9 @@
 
-# DevOps Mini-Project
-
-Welcome to the DevOps (CDK) Mini-Project! This challenge is crafted to assess your proficiency in AWS Networking, AWS CDK, Docker, TypeScript, and Python through practical, hands-on tasks. Below is a detailed guide to help you understand the expectations for your project submission.
+# Infrastructure Mini-Project
+Welcome to the Infrastructure Mini-Project Mini-Project to create an AWS Fargate service using the AWS CDK! This challenge is designed to help you learn and enhance your skills in AWS Networking, AWS CDK, Docker, TypeScript, and Python through practical, hands-on tasks. This project serves as an opportunity to grow your understanding of key DevOps/Infra concepts and technologies by working through real-world scenarios.
 
 ## Project Overview
-
-Initially crafted in haste to validate concepts, the application’s infrastructure was made directly accessible from the internet, which was suitable for a prototype. Your task is to enhance the security and infrastructure setup of this web application to ensure it is only accessible via a load balancer. This project will challenge your skills in:
+Originally developed as a quick prototype to validate concepts, the application's infrastructure was directly accessible from the internet. Your challenge is to improve the security and infrastructure setup so that the application is only accessible via a load balancer. This hands-on project will guide you through learning how to:
 
 - AWS Networking
 - AWS CDK
@@ -14,12 +12,13 @@ Initially crafted in haste to validate concepts, the application’s infrastruct
 - Python
 
 ## Preparation
+Before you begin, make sure you have the following:
 
-Before starting the project, ensure you have the following:
+- An active AWS account
+- AWS CDK for TypeScript installed
+- AWS CDK prerequisites installed
 
-- An active AWS account.
-- AWS CDK for TypeScript installed.
-- AWS CDK prerequisites installed.
+This project is a learning journey, so take your time exploring the technologies, experimenting with solutions, and enhancing your skills as you go!
 
 ## Install Docker
 
