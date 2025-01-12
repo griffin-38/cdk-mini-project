@@ -536,5 +536,6 @@ If you encounter any issues or need to customize the deployment further, refer t
 
 Thank you for following along, and happy coding!
 
-
-
+****
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

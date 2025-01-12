@@ -3,6 +3,7 @@
 !jest.config.js
 infra-old.ts
 infra-local.ts
+master.infra.ts
 .venvScriptsactivate
 venv
 index.ts
